@@ -565,7 +565,20 @@ class Solutions:
 
         ref: https://leetcode.com/problems/remove-anagrams/
         """
+        if len(words) <= 1:
+            return words
 
+        can_select_index = True
+
+        while can_select_index:
+            for index in range(1, len(words)):
+                if sorted(words[index]) == sorted(words[index - 1]):
+                    words.pop(index)
+                    break
+            else:
+                can_select_index = False
+        
+        return words
         
 
 class RecentCounter:
