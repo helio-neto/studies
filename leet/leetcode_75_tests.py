@@ -521,6 +521,16 @@ class Solutions:
 
         ref: https://leetcode.com/problems/add-two-numbers/
         """
+        # Base case: empty list or single node
+        if l1 is None or l1.next is None:
+            return l1
+        if l2 is None or l2.next is None:
+            return l2
+        
+        # Recursive case: add the two numbers
+        l1.val += l2.val
+        l1.next = self.addTwoNumbers(l1.next, l2.next)
+        return l1
     
     def removeAnagrams(self, words: List[str]) -> List[str]:
         """
@@ -579,7 +589,7 @@ class Solutions:
                 can_select_index = False
         
         return words
-        
+
 
 class RecentCounter:
 
