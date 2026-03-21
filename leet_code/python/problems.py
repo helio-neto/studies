@@ -1,20 +1,14 @@
 from typing import List, Optional
 from collections import Counter
+from studies.leet_code.python.list_node import ListNode
 
 
-class ListNode:
-    """ Definition for singly-linked list."""
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-
-class Solutions:
+class Problems:
     """ Solutions for LeetCode problems. """
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/product-of-array-except-self/
+        Ref: https://leetcode.com/problems/product-of-array-except-self/
         """
         n = len(nums)
         res = [1] * n
@@ -36,7 +30,7 @@ class Solutions:
     def compress(self, chars: List[str]) -> int:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/string-compression/
+        Ref: https://leetcode.com/problems/string-compression/
         """
         if not chars:
             return 0
@@ -71,6 +65,7 @@ class Solutions:
     def compress_by_me(self, chars: List[str]) -> int:
         """
         Status: COMPLETE
+        Ref: https://leetcode.com/problems/string-compression/
         """
         chars_length = len(chars)
         string_builder = ""
@@ -103,8 +98,8 @@ class Solutions:
     def increasingTriplet(self, nums: List[int]) -> bool:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/increasing-triplet-subsequence/
-
+        Ref: https://leetcode.com/problems/increasing-triplet-subsequence/
+        Description:
         Given an integer array nums, return true if there exists a triple of
         indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k].
         If no such indices exists, return false.
@@ -123,6 +118,9 @@ class Solutions:
     
     def moveZeroes(self, nums: List[int]) -> None:
         """
+        Status: COMPLETE
+        Ref:
+        Description:
         Do not return anything, modify nums in-place instead.
         """
         if len(nums) <= 1:
@@ -140,8 +138,8 @@ class Solutions:
     def isSubsequence(self, s: str, t: str) -> bool:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/is-subsequence/
-
+        Ref: https://leetcode.com/problems/is-subsequence/
+        Description:
         A subsequence of a string is a new string that is formed from the original string
         by deleting some (can be none) of the characters without disturbing the relative
         positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde"
@@ -162,9 +160,9 @@ class Solutions:
 
     def lengthOfLongestSubstring(self, s: str) -> int:
         """
-        Status: INCOMPLETE
-        ref: https://leetcode.com/problems/longest-substring-without-repeating-characters/
-
+        Status: WORK IN PROGRESS...
+        Ref: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+        Description:
         Given a string s, find the length of the longest substring without duplicate characters.
 
         Example 1:
@@ -197,8 +195,8 @@ class Solutions:
     def largestAltitude(self, gain: List[int]) -> int:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/find-the-highest-altitude/
-        
+        Ref: https://leetcode.com/problems/find-the-highest-altitude/
+        Description:
         There is a biker going on a road trip. The road trip consists of n + 1 points at
         different altitudes. The biker starts his trip on point 0 with altitude equal 0.
 
@@ -233,7 +231,7 @@ class Solutions:
     def findDifference(self, nums1: List[int], nums2: List[int]) -> List[List[int]]:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/find-the-difference-of-two-arrays/
+        Ref: https://leetcode.com/problems/find-the-difference-of-two-arrays/
         """
         return [
             list(set([num1 for num1 in nums1 if num1 not in nums2])),
@@ -243,7 +241,7 @@ class Solutions:
     def uniqueOccurrences(self, arr: List[int]) -> bool:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/unique-number-of-occurrences/
+        Ref: https://leetcode.com/problems/unique-number-of-occurrences/
         """
         uniques_list = set(arr)
         uniques_count = Counter(item for item in arr if isinstance(item, int))
@@ -253,14 +251,14 @@ class Solutions:
     def singleNumber(self, nums: List[int]) -> int:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/single-number/
+        Ref: https://leetcode.com/problems/single-number/
         """
         return 2 * sum(set(nums)) - sum(nums)
 
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/reverse-linked-list/
+        Ref: https://leetcode.com/problems/reverse-linked-list/
         """
         current_value = head
         previous_value = None
@@ -283,8 +281,8 @@ class Solutions:
     def pivotIndex(self, nums: List[int]) -> int:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/find-pivot-index/
-        
+        Ref: https://leetcode.com/problems/find-pivot-index/
+        Description:
         Given an array of integers nums, calculate the pivot index of this array.
 
         The pivot index is the index where the sum of all the numbers strictly to the
@@ -347,7 +345,11 @@ class Solutions:
         return no_index
 
     def findMaxAverageByMe(self, nums: List[int], k: int) -> float:
-        # this was my approach, but it was not efficient
+        """
+        Status: COMPLETE
+        Ref:
+        # this was my first pproach, but it was not efficient
+        """
         input_variables = False if not nums or not k else True
         size_fits = False if k < 1 or k > len(nums) else True
 
@@ -367,6 +369,10 @@ class Solutions:
         return maximum_average
 
     def findMaxAverage(self, nums: List[int], k: int) -> float:
+        """
+        Status: COMPLETE
+        Ref:
+        """
         n = len(nums)
         if k <= 0 or k > n:
             return 0.0
@@ -387,8 +393,8 @@ class Solutions:
     def guessNumber(self, n: int) -> int:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/guess-number-higher-or-lower/
-        
+        Ref: https://leetcode.com/problems/guess-number-higher-or-lower/
+        Description:
         We are playing the Guess Game. The game is as follows:
 
         I pick a number from 1 to n. You have to guess which number I picked
@@ -440,8 +446,8 @@ class Solutions:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/two-sum/
-        
+        Ref: https://leetcode.com/problems/two-sum/
+        Description:
         Given an array of integers nums and an integer target, return indices of the
         two numbers such that they add up to target.
 
@@ -488,7 +494,7 @@ class Solutions:
     def maxFreqSum(self, s: str) -> int:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/maximum-frequency-sum-of-a-string-after-modifying/ 
+        Ref: https://leetcode.com/problems/maximum-frequency-sum-of-a-string-after-modifying/ 
         """
         vowels = "aeiou"
         vowel_count = [s.count(vowel) for vowel in vowels]
@@ -498,7 +504,7 @@ class Solutions:
     def numEquivDominoPairsByMe(self, dominoes: List[List[int]]) -> int:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/number-of-equivalent-domino-pairs/ 
+        Ref: https://leetcode.com/problems/number-of-equivalent-domino-pairs/ 
         """
         dominoes_left = 0
         dominoes_right = 1
@@ -516,6 +522,10 @@ class Solutions:
         return number_of_pairs
     
     def numEquivDominoPairs(self, dominoes: List[List[int]]) -> int:
+        """
+        Status: COMPLETE
+        Ref:
+        """
         counts = defaultdict(int)
         pairs = 0
         
@@ -529,7 +539,7 @@ class Solutions:
     def findWordsContaining(self, words: List[str], x: str) -> List[int]:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/find-words-containing-character/
+        Ref: https://leetcode.com/problems/find-words-containing-character/
         """
         words_found = []
         for index, word in enumerate(words):
@@ -540,7 +550,7 @@ class Solutions:
     def canBeTypedWords(self, text: str, brokenLetters: str) -> int:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/maximum-frequency-sum-of-a-string-after-modifying/ 
+        Ref: https://leetcode.com/problems/maximum-frequency-sum-of-a-string-after-modifying/ 
         """
         splited_words = text.split(" ")
         broken_letters = list(brokenLetters)
@@ -553,8 +563,8 @@ class Solutions:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/add-two-numbers/
-        
+        Ref: https://leetcode.com/problems/add-two-numbers/
+        Description:
         You are given two non-empty linked lists representing two non-negative integers. The digits are
         stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and
         return the sum as a linked list.
@@ -599,8 +609,8 @@ class Solutions:
     def removeAnagrams(self, words: List[str]) -> List[str]:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/remove-anagrams/
-        
+        Ref: https://leetcode.com/problems/remove-anagrams/
+        Description:
         You are given a 0-indexed string array words, where words[i] consists of lowercase English letters.
         In one operation, select any index i such that 0 < i < words.length and words[i - 1] and words[i]
         are anagrams, and delete words[i] from words. Keep performing this operation as long as you can
@@ -658,7 +668,7 @@ class Solutions:
     def isPalindrome(self, x: int) -> bool:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/palindrome-number/
+        Ref: https://leetcode.com/problems/palindrome-number/
 
         Given an integer x, return true if x is a palindrome, and false otherwise.
  
@@ -693,7 +703,7 @@ class Solutions:
     def addBinary(self, a: str, b: str) -> str:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/add-binary/
+        Ref: https://leetcode.com/problems/add-binary/
         
         Given two binary strings a and b, return their sum as a binary string.
         
@@ -718,7 +728,7 @@ class Solutions:
     def constructTransformedArray(self, nums: List[int]) -> List[int]:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/construct-transformed-array/
+        Ref: https://leetcode.com/problems/construct-transformed-array/
         """
         ct_index = 0
         nums_size = len(nums)
@@ -732,7 +742,7 @@ class Solutions:
     def nextGreatestLetter(self, letters: List[str], target: str) -> str:
         """
         Status: COMPLETE
-        ref: https://leetcode.com/problems/find-smallest-letter-greater-than-target/
+        Ref: https://leetcode.com/problems/find-smallest-letter-greater-than-target/
         """
         alphabet = 'abcdefghijklmnopqrstuvwxyz'
         target_start = alphabet.index(target)
@@ -762,38 +772,143 @@ class Solutions:
             return 1
     
     def successfulPairs(self, spells: List[int], potions: List[int], success: int) -> List[int]:
-        """."""
-        pass
+        """
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/successful-pairs-of-spells-and-potions/
+        """
+        # Sort potions for binary search
+        potions.sort()
+        successful_spells = []
+        
+        for spell in spells:
+            # Calculate minimum potion strength needed
+            min_potion_strength = (success + spell - 1) // spell  # Ceiling division
+            
+            # Binary search for first potion >= min_potion_strength
+            left, right = 0, len(potions)
+            while left < right:
+                mid = (left + right) // 2
+                if potions[mid] < min_potion_strength:
+                    left = mid + 1
+                else:
+                    right = mid
+            
+            # All potions from left to end are successful
+            successful_spells.append(len(potions) - left)
+    
+        return successful_spells
 
     def successfulPairsFirstVersion(self, spells: List[int], potions: List[int], success: int) -> List[int]:
+        """
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/successful-pairs-of-spells-and-potions/
+        """
         successful_spells = []
         for spell in spells:
             conjured_spells = []
             conjured_spells = [spell * potion for potion in potions if spell * potion >= success]
             successful_spells.append(len(conjured_spells))
         return successful_spells
-        
 
-
-class RecentCounter:
-    """ 
-    Status: COMPLETE
-    ref: https://leetcode.com/problems/number-of-recent-calls/
-
-    You have a RecentCounter class which counts the number of recent requests within a certain time frame.
-
-    int ping(int t) Adds a new request at time t, where t represents some time in milliseconds, and returns
-    the number of requests that has happened in the past 3000 milliseconds (including the new request).
-    Specifically, return the number of requests that have happened in the inclusive range [t - 3000, t].
-    It is guaranteed that every call to ping uses a strictly larger value of t than the previous call.
-    """
-    def __init__(self) -> None:
-        """Initializes the counter with zero recent requests."""
-        self.recent_requests = []
-
-    def ping(self, time_in_milliseconds: int) -> int:
-        """ Adds a new request representing the time in milliseconds and returns the number of requests that
-        has happened in the past 3000 milliseconds (including the new request).
+    def removeElement(self, nums: List[int], val: int) -> int:
         """
-        self.recent_requests.append(time_in_milliseconds)
-        return len([request for request in self.recent_requests if request >= time_in_milliseconds - 3000 and request <= time_in_milliseconds])
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/remove-element/
+        """
+        nums[:] = [num for num in nums if num != val]
+        return len(nums)
+    
+    def strStr(self, haystack: str, needle: str) -> int:
+        """
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/
+        """
+        return haystack.find(needle)
+    
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        """
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/search-insert-position/
+        """
+        insert_index = 0
+        try:
+            return nums.index(target)
+        except ValueError:
+            nums_size = len(nums)
+            left, right = 0, nums_size
+            while left < right:
+                if target < nums[left]:
+                    return left
+                if target > nums[nums_size -1]:
+                    return nums_size
+                if target > nums[left] and target < nums[left+1]:
+                    return left+1
+                left += 1
+
+    def lengthOfLastWord(self, s: str) -> int:
+        """
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/length-of-last-word/
+        """
+        string_list = s.split()
+        return len(string_list[-1])
+    
+    def plusOne(self, digits: List[int]) -> List[int]:
+        """
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/plus-one/
+        """
+        full_integer = int("".join(str(digit) for digit in digits))
+        full_integer_plus_one = full_integer + 1
+        digits_list_after = [int(int_plus) for int_plus in str(full_integer_plus_one)]
+        return digits_list_after
+    
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/merge-sorted-array/
+        Do not return anything, modify nums1 in-place instead.
+        """
+        nums1[:] = nums1[:m] + nums2[:n]
+        nums1.sort()
+
+    def removeDuplicates(self, nums: List[int]) -> int:
+        """
+        Status: COMPLETE
+        ref: https://leetcode.com/problems/remove-duplicates-from-sorted-array/
+        """
+        unique_numbers = []
+        for number in nums:
+            if number not in unique_numbers:
+                unique_numbers.append(number)
+        nums[:] = unique_numbers
+        return len(unique_numbers)
+
+    def isValid(self, s: str) -> bool:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/valid-parentheses/
+        """
+        # dictionary of brackets (close: open)
+        brackets_dict = {")": "(", "}": "{", "]": "["}
+        open_bracket_stack = []
+        is_valid = False
+        # check input size for odd number of brackets
+        if len(s) % 2 != 0:
+            return is_valid
+        for bracket in s:
+            if bracket in brackets_dict.values():
+                open_bracket_stack.insert(0, bracket)
+                is_valid = False
+                continue
+            if bracket in brackets_dict.keys():
+                match_bracket = brackets_dict.get(bracket)
+                if open_bracket_stack and match_bracket == open_bracket_stack[0]:
+                    open_bracket_stack.pop(0)
+                    is_valid = True
+                    continue
+                else:
+                    return False
+        if len(open_bracket_stack) > 0:
+            is_valid = False
+        return is_valid
