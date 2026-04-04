@@ -912,3 +912,65 @@ class Problems:
         if len(open_bracket_stack) > 0:
             is_valid = False
         return is_valid
+    
+    def majorityElement(self, nums: List[int]) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/majority-element/
+        """
+        count_elements = Counter(nums)
+        return count_elements.most_common(1)[0][0]
+
+    def missingNumber(self, nums: List[int]) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/missing-number/
+        """
+        n = len(nums) + 1
+        # Find the number not in the nums list
+        missing_number = [
+            range_number for range_number in range(n) if range_number not in nums
+        ]
+        return missing_number[0]
+    
+    def reverseString(self, s: List[str]) -> None:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/reverse-string/
+        
+        Do not return anything, modify s in-place instead.
+        """
+        return s.reverse()
+
+    def countSegments(self, s: str) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/number-of-segments-in-a-string/
+        """
+        string_list = s.split()
+        return len(string_list)
+    
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/most-common-word/
+        """
+        symbols_to_remove = "!?',;."
+        clean_paragraph = paragraph.translate({ord(word): " " for word in symbols_to_remove})
+        split_words = clean_paragraph.lower().split()
+        not_banned_words = [word for word in split_words if word not in banned]
+        count_words = Counter(not_banned_words)
+        return count_words.most_common(1)[0][0]
+    
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/ransom-note/
+        """
+        for ransom_word in ransomNote:
+            if ransom_word in magazine:
+                magazine = magazine.replace(ransom_word, "", 1)
+                continue
+            else:
+                return False
+        return True
