@@ -974,3 +974,160 @@ class Problems:
             else:
                 return False
         return True
+    
+    def firstUniqChar(self, s: str) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/first-unique-character-in-a-string/
+        """
+        for char_index, char in enumerate(s):
+            if s.count(char) == 1:
+                return char_index
+        return -1
+
+    def findTheDifference(self, s: str, t: str) -> str:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/find-the-difference/
+        """
+        count_s = Counter(s)
+        count_t = Counter(t)
+        count_diff = count_t - count_s
+        return list(count_diff)[0]
+    
+    def addStrings(self, num1: str, num2: str) -> str:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/add-strings/
+        """
+        sys.set_int_max_str_digits(6000)
+        return str(sum([int(num1), int(num2)]))
+    
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+        """
+        num_set = set(nums)
+        return [number for number in range(1, len(nums) + 1) if number not in num_set]
+    
+    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/max-consecutive-ones/
+        """
+        max_ones = [
+            sum(1 for _ in group) if key == 1 else 0 for key, group in groupby(nums)]
+        return max(max_ones)
+    
+    def detectCapitalUse(self, word: str) -> bool:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/detect-capital/
+        """
+        if word.islower() or word.isupper() or word.istitle():
+            return True
+        else:
+            return False
+    
+    def checkRecord(self, s: str) -> bool:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/student-attendance-record-i/
+        """
+        start = 0
+        late_days = 3
+        late_cut = "LLL"
+        s_size = len(s)
+        # Check for Absence
+        if s.count("A") >= 2:
+            return False
+        # Check for lateness
+        while late_days <= s_size:
+            if s[start:late_days] == late_cut:
+                return False
+            start += 1
+            late_days += 1
+        return True
+    
+    def reverseWords(self, s: str) -> str:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/reverse-words-in-a-string-iii/
+        """
+        splited_words = s.split()
+        reverse_words = list(map(lambda word: word[::-1],splited_words))
+        return " ".join(reverse_words)
+    
+    def distributeCandies(self, candyType: List[int]) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/distribute-candies/
+        """
+        max_candies = int(len(candyType)/2)
+        unique_candies = set(candyType)
+        candy_types = len(unique_candies)
+
+        if candy_types >= max_candies:
+            return max_candies
+        else:
+            return candy_types
+    
+    def findErrorNums(self, nums: List[int]) -> List[int]:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/set-mismatch/
+        """
+        desired_list = [i for i in range(1,len(nums)+1)]
+        nums_counter = Counter(nums)
+        twice_number = [nums_counter.most_common(1)[0][0]]
+        missing_number = [number for number in desired_list if number not in nums]
+        return twice_number + missing_number
+
+    def rotateString(self, s: str, goal: str) -> bool:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/rotate-string/
+        """
+        for _ in range(0,len(s)):
+            s = s.removeprefix(s[0]) + s[0]
+            if s == goal:
+                return True
+        return False
+    
+    def toGoatLatin(self, sentence: str) -> str:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/goat-latin/
+        """
+        vowels = ("a", "e", "i", "o", "u")
+        split_sentence = sentence.split()
+        converted_sentence = []
+        for index, word in enumerate(split_sentence):
+            if word.lower().startswith(vowels):
+                word = word + "ma" + ("a" * (index + 1))
+            else:
+                word = word[1::] + word[0] + "ma" + ("a" * (index + 1))
+            split_sentence[index] = word
+        return " ".join(split_sentence)
+
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/backspace-string-compare/
+        """
+        backspace_char = "#"
+        while backspace_char in s or backspace_char in t:
+            s_index = s.find(backspace_char)
+            if s_index == 0:
+                s = s[1:]
+                continue
+            if s_index != -1:
+                s = s[:s_index-1] + s[s_index+1:]
+            t_index = t.find(backspace_char)
+            if t_index == 0:
+                t = t[1:]
+                continue
+            if t_index != -1:
+                t = t[:t_index-1] + t[t_index+1:]
+        return s == t
