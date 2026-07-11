@@ -5,6 +5,7 @@ from studies.leet_code.python.list_node import ListNode
 
 class Problems:
     """ Solutions for LeetCode problems. """
+
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         """
         Status: COMPLETE
@@ -509,7 +510,7 @@ class Problems:
         dominoes_left = 0
         dominoes_right = 1
         number_of_pairs = 0
-        seen_dominoes = {}
+
         while dominoes_right < len(dominoes):
             equal_dominos = dominoes[dominoes_left] == dominoes[dominoes_right]
             reversed_equals = dominoes[dominoes_left] == dominoes[dominoes_right][::-1]
@@ -589,23 +590,34 @@ class Problems:
         0 <= Node.val <= 9
         It is guaranteed that the list represents a number that does not have leading zeros.
         """
-        # Base case: empty list or single node
-        # Base case: empty list or single node
-        if l1 is None:
-            return l1
-        if l2 is None:
-            return l2
-        
-        # Recursive case: add the two numbers
-        l1.val += l2.val
-        if l1.val > 9:
-            rest_value = l1.val - 9
-            l1.val = l1.val - 10
-            if l2.next:
-                l2.next.val += rest_value
-        l1.next = self.addTwoNumbers(l1.next, l2.next)
-        return l1
-    
+        # Create a dummy node to act as the starting point of the result list
+        dummy = ListNode(0)
+        current = dummy
+        carry = 0
+       
+        # Continue looping while there are nodes to process or a leftover carry
+        while l1 or l2 or carry:
+            # Extract digits, substituting 0 if a list has already finished
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+            
+            # Calculate total sum for the current position
+            total = val1 + val2 + carry
+            
+            # Determine new carry and the digit to store
+            carry = total // 10
+            digit = total % 10
+            
+            # Append the new digit node to our result list
+            current.next = ListNode(digit)
+            current = current.next
+            
+            # Advance pointers if more nodes exist
+            if l1: l1 = l1.next
+            if l2: l2 = l2.next
+
+        return dummy.next
+
     def removeAnagrams(self, words: List[str]) -> List[str]:
         """
         Status: COMPLETE
@@ -1131,3 +1143,303 @@ class Problems:
             if t_index != -1:
                 t = t[:t_index-1] + t[t_index+1:]
         return s == t
+    
+    def uncommonFromSentences(self, s1: str, s2: str) -> List[str]:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/uncommon-words-from-two-sentences/
+        """
+        s1_word_list = s1.split()
+        s2_word_list = s2.split()
+        set_s1 = set(s1_word_list)
+        set_s2 = set(s2_word_list)
+        diff_word_list = list(set_s1 ^ set_s2)
+        uncommon_words = [
+            word for word in diff_word_list 
+            if s1_word_list.count(word) <= 1 and s2_word_list.count(word) <=1
+        ]
+        return uncommon_words
+
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/word-pattern/
+        """
+        string_list = s.split()
+        pattern_list = list(pattern)
+        unique_pattern = list(dict.fromkeys(pattern_list))
+        unique_string = list(dict.fromkeys(string_list))
+        unique_matches = list(zip_longest(unique_pattern, unique_string))
+        matches = list(zip(pattern_list, string_list))
+        for match in matches:
+            if match not in unique_matches:
+                return False
+        return True
+
+    def calPoints(self, operations: List[str]) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/baseball-game/
+        """
+        records = []
+        for index, operation in enumerate(operations):
+            try:
+                records.append(int(operation))
+            except ValueError:
+                if operation == "+":
+                    records.append(sum(records[-2:]))
+                elif operation == "D":
+                    records.append(2*records[-1])
+                else:
+                    records.pop()
+        return sum(records)
+
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        """
+        Status: WORKING...
+        Ref: https://leetcode.com/problems/lemonade-change/
+        """
+        possible_bills = [5,10,20]
+        possible_change_combinations = list(combinations_with_replacement(possible_bills, 2))
+        lemonade_cost = 5
+        change = []
+        change_counter = Counter()
+        # --------------------------------------------------------------------------------- #
+        print("# --------------------------------------------------------------------------------- #")
+        print(f"List of Bills: {bills}")
+        for payment in bills:
+            payback = payment - lemonade_cost
+            print("# --------------------------------------------------------------------------------- #")
+            print(f"Payment: {payment}, Payback: {payback}")
+            print("# --------------------------------------------------------------------------------- #")
+            if payback > sum(change):
+                print("#                Not enough change to pay                #")
+                return False
+            # --------------------------------------------------------------------------------- #
+            if payback == 0:
+                change.append(payment)
+                change_counter.update([payment])
+                continue
+            # --------------------------------------------------------------------------------- #
+            print("# ------------------------------- CHANGE AVAILABLE -------------------------------- #")
+            print(f"Change: {change}")
+            print(f"Change Sum: {sum(change)}")
+            print(f"Counter Elements: {sorted(change_counter.elements())}")
+            print(f"Counter Items: {change_counter.items()}")
+            print(f"Counter Total: {sum(change_counter.elements())}")
+            print("# --------------------------------------------------------------------------------- #")
+            if payback in possible_bills:
+                change_counter.subtract([payback])
+            else:
+                print("# ----------------------------- Time to deal with change -------------------------- #")
+                possible_change = [Counter(pair) for pair in possible_change_combinations if sum(pair) == payback]
+                print(f"Counter Possible Change: {possible_change}")
+                print(f"Composite Counter Change Subtract: {possible_change[0].items()}")
+                has_payback = possible_change[0] & change_counter
+                is_enough = sum(has_payback) >= payback
+                print(f"Does Counter has enough bills? {is_enough}")
+                change_counter.subtract(possible_change[0])
+                print("# --------------------------------------------------------------------------------- #")
+            # --------------------------------------------------------------------------------- #
+            while payback > 0:
+                payback = abs(payback - change[-1])
+                change.pop()
+            change_counter.update([payment])
+            change.append(payment)
+            print("# ------------------------------ CHANGE AFTER PAYMENT ---------------------------- #")
+            print(f"Change: {change}")
+            print(f"Change Sum: {sum(change)}")
+            print(f"Counter Elements: {sorted(change_counter.elements())}")
+            print(f"Counter Items: {change_counter.items()}")
+            print(f"Counter Total: {sum(change_counter.elements())}")
+            print("# --------------------------------------------------------------------------------- #")
+            # --------------------------------------------------------------------------------- #
+        return True
+    
+    def reverse(self, x: int) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/reverse-integer/
+        """
+        org = x
+        x = abs(x)
+        res = int(str(x)[::-1])
+        if org < 0:
+            res *= -1
+        if res < -(1 << 31) or res > (1 << 31) - 1:
+            return 0
+        return res
+    
+    def letterCombinations(self, digits: str) -> List[str]:
+        """
+        Status: Complete
+        Ref: https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+        """
+        phone_letters = {
+            "2": ["abc"],
+            "3": ["def"],
+            "4": ["ghi"],
+            "5": ["jkl"],
+            "6": ["mno"],
+            "7": ["pqrs"],
+            "8": ["tuv"],
+            "9": ["wxyz"]
+        }
+        letter_list = []
+        for digit in digits:
+            letter_list.extend(phone_letters.get(digit))
+        possible_combinations = product(*letter_list)
+        letter_combinations = ["".join(letter_combination) for letter_combination in list(possible_combinations)]
+        return letter_combinations
+    
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+        """
+        last = {}            # char -> last index seen
+        left = 0
+        best_len = 0
+
+        for right, ch in enumerate(s):
+            if ch in last and last[ch] >= left:
+                left = last[ch] + 1
+            last[ch] = right
+
+            cur_len = right - left + 1
+            if cur_len > best_len:
+                best_len = cur_len
+
+        return best_len
+
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/median-of-two-sorted-arrays/
+        """
+        merged_array = sorted(nums1 + nums2)
+        median_value = statistics.median(merged_array)
+        return median_value
+
+    def longestPalindrome(self, s: str) -> str:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/longest-palindromic-substring/
+        """
+        n = len(s)
+        start, maxLen = 0, 1
+
+        for i in range(n):
+            # this runs two times for both odd and even 
+            # length palindromes. 
+            # j = 0 means odd and j = 1 means even length
+            for j in range(2):
+                low, high = i, i + j
+                # expand substring while it is a palindrome
+                # and in bounds
+                while low >= 0 and high < n and s[low] == s[high]:
+                    currLen = high - low + 1
+                    if currLen > maxLen:
+                        start = low
+                        maxLen = currLen
+                    low -= 1
+                    high += 1
+
+        return s[start:start + maxLen]
+
+    def convert(self, s: str, numRows: int) -> str:
+        """
+        Status: COMPLETE
+        Ref: https://leetcode.com/problems/zigzag-conversion/
+        """
+        s_size = len(s)
+        string_index = 0
+        index = 0  # Start at the first character
+        direction = 1  # 1 means move forward, -1 means move backwards
+        split_rows = [[] for _ in range(numRows)]
+        # Edge case: if there is only one row, return the string as is
+        if numRows == 1:
+            return s
+        # Loop runs until the string_index is no longer smaller than the string length
+        while string_index < s_size:
+            # 1. Add char to it's respective zig zag row/position
+            split_rows[index].append(s[string_index])
+            # 2. Step forward to the next char on the string
+            string_index += 1
+            # 3. Step forward or backward onto the zig zag pattern
+            index += direction
+            # 4. Check if we need to bounce back
+            if index == numRows - 1:
+                direction = -1  # Hit the zig zag end! Turn back.
+            elif index == 0:
+                direction = 1  # Hit the zig zag start! Turn back.
+        return "".join(["".join(row) for row in split_rows])
+    
+    def isMatch(self, s: str, p: str) -> bool:
+        """
+        Status: Complete
+        Ref: https://leetcode.com/problems/regular-expression-matching/
+        """
+        # dp[i][j] means whether s[:i] matches p[:j]
+        dp = [[False] * (len(p) + 1) for _ in range(len(s) + 1)]
+        dp[0][0] = True  # empty string matches empty pattern
+
+        # Handle patterns like a*, a*b*, a*b*c* that can match empty string
+        for j in range(2, len(p) + 1):
+            if p[j - 1] == '*':
+                dp[0][j] = dp[0][j - 2]
+
+        for i in range(1, len(s) + 1):
+            for j in range(1, len(p) + 1):
+                if p[j - 1] == '.' or p[j - 1] == s[i - 1]:
+                    # Current chars match
+                    dp[i][j] = dp[i - 1][j - 1]
+                elif p[j - 1] == '*':
+                    # Two cases:
+                    # 1. '*' means zero occurrence of preceding char
+                    dp[i][j] = dp[i][j - 2]
+                    # 2. '*' means one or more occurrence of preceding char
+                    if p[j - 2] == '.' or p[j - 2] == s[i - 1]:
+                        dp[i][j] = dp[i][j] or dp[i - 1][j]
+
+        return dp[len(s)][len(p)]
+    
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        """
+        Status: Complete
+        Ref: https://leetcode.com/problems/longest-common-prefix/
+        """
+        return os.path.commonprefix(strs)
+    
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
+        """
+        Status: Complete
+        Ref: https://leetcode.com/problems/3sum/
+        """
+        nums.sort()
+        n = len(nums)
+        res: List[List[int]] = []
+
+        for i in range(n - 2):
+            # skip duplicate first elements
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+            target = -nums[i]
+            left, right = i + 1, n - 1
+
+            while left < right:
+                s = nums[left] + nums[right]
+                if s == target:
+                    res.append([nums[i], nums[left], nums[right]])
+                    # advance left and right past duplicates
+                    left_val, right_val = nums[left], nums[right]
+                    while left < right and nums[left] == left_val:
+                        left += 1
+                    while left < right and nums[right] == right_val:
+                        right -= 1
+                elif s < target:
+                    left += 1
+                else:
+                    right -= 1
+        return res
