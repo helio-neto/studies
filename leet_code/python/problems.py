@@ -167,9 +167,11 @@ class Problems:
     def canBeTypedWords(self, text: str, brokenLetters: str) -> int:
         """
         Status: COMPLETE
+
         Reference: https://leetcode.com/problems/maximum-frequency-sum-of-a-string-after-modifying/
-        Description: There is a keyboard with some broken letters. Given a string text and a string brokenLetters,
-        return the number of words in text you can fully type using this keyboard.
+
+        Description: There is a keyboard with some broken letters. Given a string text and a string
+        brokenLetters, return the number of words in text you can fully type using this keyboard.
         """
         splited_words = text.split(" ")
         broken_letters = list(brokenLetters)
@@ -280,24 +282,19 @@ class Problems:
         while read_index < n:
             current_char = chars[read_index]
             count = 1
-            
             # Count consecutive characters
             while read_index + 1 < n and chars[read_index + 1] == current_char:
                 read_index += 1
                 count += 1
-            
             # Write the character
             chars[write_index] = current_char
             write_index += 1
-            
             # Write the count if greater than 1
             if count > 1:
                 for digit in str(count):
                     chars[write_index] = digit
                     write_index += 1
-            
             read_index += 1
-        
         return write_index
 
     def compress_by_me(self, chars: List[str]) -> int:
@@ -509,17 +506,14 @@ class Problems:
         n = len(nums)
         if k <= 0 or k > n:
             return 0.0
-
         # Initial window sum
         window_sum = sum(nums[0:k])
         max_sum = window_sum
-
         # Slide the window from i=1 to i = n-k
         for i in range(k, n):
             window_sum += nums[i] - nums[i - k]
             if window_sum > max_sum:
                 max_sum = window_sum
-
         # Average = max_sum / k
         return max_sum / k
     
@@ -611,7 +605,7 @@ class Problems:
                 words_found.append(index)
         return words_found
     
-    def firstUniqChar(self, s: str) -> int:
+    def firstUniqueChar(self, s: str) -> int:
         """
         Status: COMPLETE
 
@@ -734,7 +728,6 @@ class Problems:
                     # 2. '*' means one or more occurrence of preceding char
                     if p[j - 2] == '.' or p[j - 2] == s[i - 1]:
                         dp[i][j] = dp[i][j] or dp[i - 1][j]
-
         return dp[len(s)][len(p)]
     
     def isPalindrome(self, x: int) -> bool:
@@ -1785,4 +1778,3 @@ class Problems:
             if match not in unique_matches:
                 return False
         return True
-
