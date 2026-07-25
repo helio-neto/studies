@@ -3,11 +3,11 @@ from collections import Counter
 from itertools import combinations_with_replacement, product
 from typing import List, Optional
 
-from studies.leet_code.python.list_node import ListNode
+from studies.leet_code.python.list_node import SinglyLinkedList
 
 
 class Problems:
-    """ Solutions for LeetCode problems. """
+    """Solutions for LeetCode problems using Python."""
 
     def addBinary(self, a: str, b: str) -> str:
         """
@@ -47,7 +47,11 @@ class Problems:
         sys.set_int_max_str_digits(6000)
         return str(sum([int(num1), int(num2)]))
     
-    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def addTwoNumbers(
+        self,
+        l1: Optional[SinglyLinkedList],
+        l2: Optional[SinglyLinkedList]
+    ) -> Optional[SinglyLinkedList]:
         """
         Status: COMPLETE
 
@@ -78,7 +82,7 @@ class Problems:
         It is guaranteed that the list represents a number that does not have leading zeros.
         """
         # Create a dummy node to act as the starting point of the result list
-        dummy = ListNode(0)
+        dummy = SinglyLinkedList(0)
         current = dummy
         carry = 0
        
@@ -96,7 +100,7 @@ class Problems:
             digit = total % 10
             
             # Append the new digit node to our result list
-            current.next = ListNode(digit)
+            current.next = SinglyLinkedList(digit)
             current = current.next
             
             # Advance pointers if more nodes exist
@@ -229,7 +233,29 @@ class Problems:
             start += 1
             late_days += 1
         return True
-    
+
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        """
+        Status: WORKING...
+
+        Reference: https://leetcode.com/problems/combination-sum/
+
+        Description: Given an array of distinct integers candidates and a target integer target,
+        return a list of all unique combinations of candidates where the chosen numbers sum to target.
+        You may return the combinations in any order.
+        The same number may be chosen from candidates an unlimited number of times.
+        Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+        The test cases are generated such that the number of unique combinations that sum up to target is
+        less than 150 combinations for the given input.
+        """
+        unique_combinations = []
+        # Loop through all possible lengths of candidates permutations
+        for combination_size in range(1, len(candidates) + 2):
+            for possible_candidate in combinations_with_replacement(candidates, combination_size):
+                if sum(possible_candidate) == target:
+                    unique_combinations.append(possible_candidate)
+        return unique_combinations
+
     def compareVersion(self, version1: str, version2: str) -> int:
         """
         Status: COMPLETE
@@ -1447,7 +1473,7 @@ class Problems:
             return 0
         return res
     
-    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def reverseList(self, head: Optional[SinglyLinkedList]) -> Optional[SinglyLinkedList]:
         """
         Status: COMPLETE
 
