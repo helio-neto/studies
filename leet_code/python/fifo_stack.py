@@ -1,5 +1,19 @@
-class FifoQueue:
+from collections import deque
 
+
+class FifoStack:
+    """
+    A first-in-first-out (FIFO) queue using a Python's deque implementation.
+    
+    Example:
+    stack = FifoStack()
+    stack.push(1)
+    stack.push(2)
+    stack.pop()  # returns 1
+    stack.peek()  # returns 2
+    stack.empty()  # returns False
+
+    """
     def __init__(self):
         self.queue = deque()
 
@@ -14,11 +28,3 @@ class FifoQueue:
 
     def empty(self) -> bool:
         return len(self.queue) == 0
-
-
-# FifoQueue object will be instantiated and called as such:
-# obj = FifoQueue()
-# obj.push(x)
-# param_2 = obj.pop()
-# param_3 = obj.peek()
-# param_4 = obj.empty()

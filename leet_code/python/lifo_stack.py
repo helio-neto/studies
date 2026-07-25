@@ -1,12 +1,17 @@
+from collections import deque
+
+
 class LifoStack:
-    """A last-in-first-out (LIFO) stack using only one queue.
+    """
+    A last-in-first-out (LIFO) stack using a Python's deque implementation.
     
-    # myStack object will be instantiated and called as such:
-    # myStack = LifoStack()
-    # myStack.push(x)
-    # param_2 = myStack.pop()
-    # param_3 = myStack.top()
-    # param_4 = myStack.empty()
+    Example:
+    myStack = LifoStack()
+    myStack.push(1)
+    myStack.push(2)
+    myStack.pop()  # returns 2
+    myStack.top()  # returns 1
+    myStack.empty()  # returns False
     
     """
 
